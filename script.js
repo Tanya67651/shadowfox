@@ -1,40 +1,40 @@
-const sidemenu = document.querySelector('#sidemenu');
-const navBar = document.querySelector("nav");
-const navLinks = document.querySelector("nav ul");
-function openmenu(){
-   sidemenu.style.transform = 'translateX(-16rem)';
-}
+const imgs = document.querySelectorAll('.header-slider ul img');
+const prev_btn = document.querySelector('.control_prev');
+const next_btn = document.querySelector('.control_next');
 
-function closemenu(){
-   sidemenu.style.transform = 'translateX(16rem)';
-}
+let n = 0;
 
-window.addEventListener('scroll', ()=>{
-   if(scrollY > 50) {
-    navBar.classList.add('bg-white', 'bg-opacity-50', 'backdrop-blur-lg', 
-      'shadom-sm'); 
-      navLinks.classList.remove('bg-white', 'shadom-sm', 'bg-opacity-50' );  
-   } else{
-      navBar.classList.remove('bg-white', 'bg-opacity-50', 'backdrop-blur-lg', 
-      'shadom-sm');  
-       navLinks.classList.add('bg-white', 'shadom-sm', 'bg-opacity-50' );  
-   }
+function changeSlide(){
+    for (let i = 0; i < imgs.length; i++) {
+        imgs[i].style.display = 'none';
+    }
+    imgs[n].style.display = 'block';
+}
+changeSlide();
+
+prev_btn.addEventListener('click', (e)=>{
+    if(n > 0){
+        n--;
+    }else{
+        n = imgs.length - 1;
+    }
+ changeSlide();
+
+})
+next_btn.addEventListener('click', (e)=>{
+    if(n < imgs.length - 1){
+        n++;
+    }else{
+        n = 0;
+    }
+ changeSlide();
+
 })
 
-// Light mode Dark mode 
-// if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia
-// ('(prefers-color-scheme: dark)').matches)) {
-//    document.documentElement.classList.add('dark')
-// } else {
-//    document.documentElement.classList.remove('dark')
-// }
-
-// function toggleTheme(){
-//    document.documentElement.classList.toggle('dark'); 
-
-//  if(document.documentElement.classList.contains('dark')){
-//    localStorage.theme = 'dark';
-//  } else{
-//    localStorage.theme = 'light';
-//  }
-// }
+const scrollContainer = document.querySelectorAll('.products');
+for (const item of scrollContainer){
+item.addEventListener('wheel', (evt)=>{
+    evt.preventDefault();
+    item.scrollLeft += evt.deltaY;
+})
+}
